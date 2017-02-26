@@ -35,14 +35,20 @@
 {% endblock %}
 
 {% block scripts %}
-	{{ super() }}
-	<script type="text/javascript" charset="utf-8"
+    {{ super() }}
+    <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-    	var p = d3.select("body")
-    		.selectAll("p")
-    		.text("Hello World d3");
-    	p.style("color", "red");
-    	p.style("font-size", "72px");
+        var width = 400;
+        var height = 400;
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+        svg.append("circle")
+            .attr("cx", "50px")
+            .attr("cy", "50px")
+            .attr("r", "50px")
+            .attr("fill", "red");
     </script>
 {% endblock %}

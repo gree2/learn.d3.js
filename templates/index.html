@@ -39,30 +39,20 @@
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
         var numbers = [54, 23, 67, 45, 89, 12];
-        // sort ascending
-        numbers.sort(d3.ascending);
-        console.log(numbers);
-        // sort descending
-        numbers.sort(d3.descending);
-        console.log(numbers);
-        // min max extent
-        console.log(d3.min(numbers));
-        console.log(d3.max(numbers));
-        console.log(d3.extent(numbers));
-        // min max extent with function
-        console.log(d3.min(numbers, function(d){ return d * 3; }));
-        console.log(d3.max(numbers, function(d){ return d - 5; }));
-        console.log(d3.extent(numbers, function(d){ return d % 7; }));
-        // sum
-        console.log(d3.mean(numbers));
-        console.log(d3.sum(numbers, function(d){ return d / 3; }));
-        // quantile
-        console.log(d3.quantile(numbers, 0.25));
-        console.log(d3.quantile(numbers, 0.50));
-        console.log(d3.quantile(numbers, 0.75));
-        console.log(d3.quantile(numbers, 1.00));
-        // variance and deviation
-        console.log(d3.variance(numbers));
-        console.log(d3.deviation(numbers));
+        console.log(d3.shuffle(numbers));
+        console.log(d3.merge([numbers, [73, 28, 94]]));
+        var colors = ["red", "blue", "green", "yellow", "white"];
+        console.log(d3.pairs(colors));
+        console.log(d3.range(10))
+        console.log(d3.zip(
+            [100, 200, 300],
+            ["tim", "jim", "him"],
+            [false, true, false]
+        ));
+        var a = [12, 23, 34];
+        var b = [45, 56, 67];
+        console.log(d3.sum(d3.zip(a, b), function(d){ return d[0] * d[1]; }));
+        var c = [[1, 2, 3,], [4, 5, 6]];
+        console.log(d3.transpose(c));
     </script>
 {% endblock %}

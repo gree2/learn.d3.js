@@ -39,14 +39,11 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        // select all p
-        var p = d3.selectAll("p");
-        p.datum(7);
-        console.log(p);
-        p.datum("thunder")
-            .append("span")
-            .text(function(d, i){
-                return " " + d + " " + i;
-            });
+        var dataset = [3, 6, 9];
+        var p = d3.select(".page-header").selectAll("p");
+        var update = p.data(dataset);
+        console.log(update);
+        console.log(update.enter());
+        console.log(update.exit());
     </script>
 {% endblock %}

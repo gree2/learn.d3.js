@@ -26,10 +26,10 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <p>Hello World</p>
-        <p>Hello World</p>
-        <p>Hello World</p>
-        <p>Hello World</p>
+        <p>Hello World 1</p>
+        <p>Hello World 2</p>
+        <p>Hello World 3</p>
+        <p>Hello World 4</p>
     </div>
 </div>
 {% endblock %}
@@ -41,7 +41,8 @@
     <script type="text/javascript">
         var width = 400;
         var height = 400;
-        var svg = d3.select("body")
+        // draw a circle on (50, 50)
+        var svg = d3.select(".page-header")
             .append("svg")
             .attr("width", width)
             .attr("height", height);
@@ -50,5 +51,23 @@
             .attr("cy", "50px")
             .attr("r", "50px")
             .attr("fill", "red");
+        var cx = d3.select("circle").attr("cx");
+        console.log(cx)
+
+        // select all p
+        var paragraphs = d3.selectAll("p");
+        // false
+        console.log(paragraphs.empty());
+        // Hello World 1
+        console.log(paragraphs.node());
+        // 4
+        console.log(paragraphs.size());
+
+        d3.select("p")
+            .attr("class", "red bigsize");
+
+        d3.select("p")
+            .classed("red", true)
+            .classed("bigsize", false);
     </script>
 {% endblock %}

@@ -38,20 +38,31 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var dataset = [
-            {id:1, name:"tim"},
-            {id:2, name:"jim"},
-            {id:3, name:"him"},
-        ];
-        var p = d3.select(".page-header").selectAll("p");
-        p.data(dataset)
-            // deal selection's each node's data
-            .each(function(d, i){
-                d.age = 20;
-            })
-            .text(function(d, i){
-                return d.name + " " + d.id + " " + d.age;
-            });
-
+        var numbers = [54, 23, 67, 45, 89, 12];
+        // sort ascending
+        numbers.sort(d3.ascending);
+        console.log(numbers);
+        // sort descending
+        numbers.sort(d3.descending);
+        console.log(numbers);
+        // min max extent
+        console.log(d3.min(numbers));
+        console.log(d3.max(numbers));
+        console.log(d3.extent(numbers));
+        // min max extent with function
+        console.log(d3.min(numbers, function(d){ return d * 3; }));
+        console.log(d3.max(numbers, function(d){ return d - 5; }));
+        console.log(d3.extent(numbers, function(d){ return d % 7; }));
+        // sum
+        console.log(d3.mean(numbers));
+        console.log(d3.sum(numbers, function(d){ return d / 3; }));
+        // quantile
+        console.log(d3.quantile(numbers, 0.25));
+        console.log(d3.quantile(numbers, 0.50));
+        console.log(d3.quantile(numbers, 0.75));
+        console.log(d3.quantile(numbers, 1.00));
+        // variance and deviation
+        console.log(d3.variance(numbers));
+        console.log(d3.deviation(numbers));
     </script>
 {% endblock %}

@@ -27,6 +27,8 @@
 <div class="container">
     <div class="page-header">
         <p></p>
+        <p></p>
+        <p></p>
     </div>
 </div>
 {% endblock %}
@@ -36,26 +38,20 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var dataset = [3, 6, 9, 2, 5, 8];
+        var dataset = [
+            {id:1, name:"tim"},
+            {id:2, name:"jim"},
+            {id:3, name:"him"},
+        ];
         var p = d3.select(".page-header").selectAll("p");
-        var update = p.data(dataset);
-        var enter = update.enter();
-        update.text(function(d){
-            return d;
-        });
-        // deal enter
-        enter.append("p")
-            .text(function(d){
-                return d;
+        p.data(dataset)
+            // deal selection's each node's data
+            .each(function(d, i){
+                d.age = 20;
+            })
+            .text(function(d, i){
+                return d.name + " " + d.id + " " + d.age;
             });
-        dataset = [1, 4, 7]
-        p = d3.select(".page-header").selectAll("p");
-        update = p.data(dataset);
-        update.text(function(d){
-            return d;
-        });
-        // deal exit
-        var exit = update.exit();
-        exit.remove();
+
     </script>
 {% endblock %}

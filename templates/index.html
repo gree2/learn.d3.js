@@ -39,35 +39,14 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var width = 400;
-        var height = 400;
-        // draw a circle on (50, 50)
-        var svg = d3.select(".page-header")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
-        svg.append("circle")
-            .attr("cx", "50px")
-            .attr("cy", "50px")
-            .attr("r", "50px")
-            .attr("fill", "red");
-        var cx = d3.select("circle").attr("cx");
-        console.log(cx)
-
         // select all p
-        var paragraphs = d3.selectAll("p");
-        // false
-        console.log(paragraphs.empty());
-        // Hello World 1
-        console.log(paragraphs.node());
-        // 4
-        console.log(paragraphs.size());
-
-        d3.select("p")
-            .attr("class", "red bigsize");
-
-        d3.select("p")
-            .classed("red", true)
-            .classed("bigsize", false);
+        var p = d3.selectAll("p");
+        p.datum(7);
+        console.log(p);
+        p.datum("thunder")
+            .append("span")
+            .text(function(d, i){
+                return " " + d + " " + i;
+            });
     </script>
 {% endblock %}

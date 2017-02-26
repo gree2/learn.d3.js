@@ -26,10 +26,7 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <p>Hello World 1</p>
-        <p>Hello World 2</p>
-        <p>Hello World 3</p>
-        <p>Hello World 4</p>
+        <p></p>
     </div>
 </div>
 {% endblock %}
@@ -39,26 +36,26 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var persons = [
-            {id: 3, name: "tom"},
-            {id: 6, name: "cat"},
-            {id: 9, name: "jim"}
-        ];
+        var dataset = [3, 6, 9, 2, 5, 8];
         var p = d3.select(".page-header").selectAll("p");
-        p.data(persons)
-            .text(function(d, i){
-                return d.id + " " + d.name;
+        var update = p.data(dataset);
+        var enter = update.enter();
+        update.text(function(d){
+            return d;
+        });
+        // deal enter
+        enter.append("p")
+            .text(function(d){
+                return d;
             });
-        // update person's name
-        persons = [
-            {id: 6, name: "tom"},
-            {id: 9, name: "cat"},
-            {id: 3, name: "jim"}
-        ];
-        p.data(persons)
-            .text(function(d, i){
-                return d.id + " " + d.name;
-            });
-
+        dataset = [1, 4, 7]
+        p = d3.select(".page-header").selectAll("p");
+        update = p.data(dataset);
+        update.text(function(d){
+            return d;
+        });
+        // deal exit
+        var exit = update.exit();
+        exit.remove();
     </script>
 {% endblock %}

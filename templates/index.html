@@ -38,31 +38,17 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var dataset = [
-            "tiger",
-            "dragon",
-            "snake",
-            "horse",
-            "sheep",
+        var persons = [
+            { id: 100, name: "jim", year: 1986, hometown: "jing" },
+            { id: 101, name: "tim", year: 1987, hometown: "jing" },
+            { id: 102, name: "him", year: 1987, hometown: "yu" },
+            { id: 103, name: "cat", year: 1988, hometown: "yu" },
+            { id: 104, name: "tom", year: 1989, hometown: "jin" },
         ];
-        var set = d3.set(dataset);
-        // true
-        console.log(set.has("tiger"));
-        console.log(set.add("monkey"));
-        console.log(set.remove("tiger"))
-        // all values
-        console.log(set.values())
-        // Uncaught TypeError: set.forEach is not a function
-        // after check network tab in
-        // chrome developer tools
-        // found js loading sequence
-        // 1. d3.min.js
-        // 2. jquery.min.js
-        // 3. bootstrap.min.js
-        set.forEach(function(value){
-            console.log(value);
-        });
-        console.log(set.empty());
-        console.log(set.size());
+        var nest = d3.nest()
+            .key(function(d){ return d.year; })
+            .key(function(d){ return d.hometown; })
+            .entries(persons);
+        console.log(nest);
     </script>
 {% endblock %}

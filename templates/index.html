@@ -38,17 +38,51 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var persons = [
-            { id: 100, name: "jim", year: 1986, hometown: "jing" },
-            { id: 101, name: "tim", year: 1987, hometown: "jing" },
-            { id: 102, name: "him", year: 1987, hometown: "yu" },
-            { id: 103, name: "cat", year: 1988, hometown: "yu" },
-            { id: 104, name: "tom", year: 1989, hometown: "jin" },
-        ];
-        var nest = d3.nest()
-            .key(function(d){ return d.year; })
-            .key(function(d){ return d.hometown; })
-            .entries(persons);
-        console.log(nest);
+        var dataset = [50, 30, 120, 87, 99, 168, 142];
+        var height = 400;
+        var width = 400;
+        var svg = d3.select(".page-header")
+            .append("svg")
+            .attr("width", width)
+            .attr("height", height);
+
+        var padding = { top: 20, right: 20, bottom: 20, left: 20 };
+        var rectStep = 35;
+        var rectWidth = 30;
+        var rect = svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            // fill x y width height
+            .attr("fill", "steelblue")
+            .attr("x", function(d, i){
+                return padding.left + i * rectStep;
+            })
+            .attr("y", function(d){
+                return height - padding.bottom - d;
+            })
+            .attr("width", rectWidth)
+            .attr("height", function(d){
+                return d;
+            });
+        var text = svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            // fill font-size text-anchor x y dx dy
+            .attr("fill", "white")
+            .attr("font-size", "14px")
+            .attr("text-anchor", "middle")
+            .attr("x", function(d, i){
+                return padding.left + i * rectStep;
+            })
+            .attr("y", function(d){
+                return height - padding.bottom - d;
+            })
+            .attr("dx", rectWidth / 2)
+            .attr("dy", "1em")
+            .text(function(d){
+                return d;
+            });
     </script>
 {% endblock %}

@@ -26,9 +26,12 @@
 {% block content %}
 <div class="container">
     <div class="page-header">
-        <p></p>
-        <p></p>
-        <p></p>
+    </div>
+    <div class="button">
+        <button type="button" onclick="myadd()">add</button>  
+        <button type="button" onclick="mydel()">del</button>  
+        <button type="button" onclick="mysort()">sort</button>  
+        <button type="button" onclick="myshuffle()">shuffle</button>  
     </div>
 </div>
 {% endblock %}
@@ -40,7 +43,7 @@
     <script type="text/javascript">
         var dataset = [50, 30, 120, 87, 99, 168, 142];
         var height = 400;
-        var width = 400;
+        var width = 1600;
         var svg = d3.select(".page-header")
             .append("svg")
             .attr("width", width)
@@ -84,5 +87,93 @@
             .text(function(d){
                 return d;
             });
+        function draw(){
+            var updateRect = svg.selectAll("rect")
+                .data(dataset);
+            var enterRect = updateRect.enter();
+            var exitRect = updateRect.exit();
+            // 1. update
+            updateRect.attr("fill", "steelblue")
+                .attr("x", function(d, i){
+                    return padding.left + i * rectStep;
+                })
+                .attr("y", function(d){
+                    return height - padding.bottom - d;
+                })
+                .attr("width", rectWidth)
+                .attr("height", function(d){
+                    return d;
+                });
+            // 2. enter
+            enterRect.append("rect")
+                .attr("x", function(d, i){
+                    return padding.left + i * rectStep;
+                })
+                .attr("y", function(d){
+                    return height - padding.bottom - d;
+                })
+                .attr("width", rectWidth)
+                .attr("height", function(d){
+                    return d;
+                });
+            // 3. exit
+            exitRect.remove();
+
+            var updateText = svg.selectAll("text")
+                .data(dataset);
+            var enterText = updateText.enter();
+            var exitText = updateText.exit();
+
+            // 1. update
+            updateText.attr("fill", "white")
+                .attr("font-size", "14px")
+                .attr("text-anchor", "middle")
+                .attr("x", function(d, i){
+                    return padding.left + i * rectStep;
+                })
+                .attr("y", function(d){
+                    return height - padding.bottom - d;
+                })
+                .attr("dx", rectWidth / 2)
+                .attr("dy", "1em")
+                .text(function(d){
+                    return d;
+                });
+            // 2. enter
+            enterText.append("text")
+                .attr("fill", "white")
+                .attr("font-size", "14px")
+                .attr("text-anchor", "middle")
+                .attr("x", function(d, i){
+                    return padding.left + i * rectStep;
+                })
+                .attr("y", function(d){
+                    return height - padding.bottom - d;
+                })
+                .attr("dx", rectWidth / 2)
+                .attr("dy", "1em")
+                .text(function(d){
+                    return d;
+                });
+            // 3. exit
+            exitText.remove();
+
+        }
+        function myadd(){
+            dataset.push(Math.floor(Math.random() * 300));
+            draw();
+        }
+        function mydel(){
+            dataset.shift();
+            draw();
+        }
+        function mysort(){
+            dataset.sort(d3.ascending);
+            draw();
+        }
+        function myshuffle(){
+            d3.shuffle(dataset);
+            draw();
+        }
     </script>
 {% endblock %}

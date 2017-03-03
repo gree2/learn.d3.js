@@ -28,10 +28,6 @@
     <div class="page-header">
     </div>
     <div class="button">
-        <button type="button" onclick="myadd()">add</button>  
-        <button type="button" onclick="mydel()">del</button>  
-        <button type="button" onclick="mysort()">sort</button>  
-        <button type="button" onclick="myshuffle()">shuffle</button>  
     </div>
 </div>
 {% endblock %}
@@ -41,139 +37,43 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var dataset = [50, 30, 120, 87, 99, 168, 142];
-        var height = 400;
-        var width = 1600;
-        var svg = d3.select(".page-header")
-            .append("svg")
-            .attr("width", width)
-            .attr("height", height);
+        var linear = d3.scaleLinear()
+            .domain([0, 500])
+            .range([0, 100]);
+        // 10 44 90
+        console.log(linear(50));
+        console.log(linear(220));
+        console.log(linear(450));
+        linear = d3.scaleLinear()
+            .domain([0, 20])
+            .range([0, 100]);
+        // 50 150
+        console.log(linear(10));
+        console.log(linear(30));
+        // if y = 80 then x = 16
+        console.log(linear.invert(80));
+        linear.clamp(true);
+        console.log(linear(30));
+        // 67
+        linear.rangeRound([0, 100]);
+        console.log(linear(13.33));
+        // [0.1, 0.5]
+        linear.domain([0.12300000, 0.488888888]).nice();
+        console.log(linear.domain());
 
-        var padding = { top: 20, right: 20, bottom: 20, left: 20 };
-        var rectStep = 35;
-        var rectWidth = 30;
-        var rect = svg.selectAll("rect")
-            .data(dataset)
-            .enter()
-            .append("rect")
-            // fill x y width height
-            .attr("fill", "steelblue")
-            .attr("x", function(d, i){
-                return padding.left + i * rectStep;
-            })
-            .attr("y", function(d){
-                return height - padding.bottom - d;
-            })
-            .attr("width", rectWidth)
-            .attr("height", function(d){
-                return d;
-            });
-        var text = svg.selectAll("text")
-            .data(dataset)
-            .enter()
-            .append("text")
-            // fill font-size text-anchor x y dx dy
-            .attr("fill", "white")
-            .attr("font-size", "14px")
-            .attr("text-anchor", "middle")
-            .attr("x", function(d, i){
-                return padding.left + i * rectStep;
-            })
-            .attr("y", function(d){
-                return height - padding.bottom - d;
-            })
-            .attr("dx", rectWidth / 2)
-            .attr("dy", "1em")
-            .text(function(d){
-                return d;
-            });
-        function draw(){
-            var updateRect = svg.selectAll("rect")
-                .data(dataset);
-            var enterRect = updateRect.enter();
-            var exitRect = updateRect.exit();
-            // 1. update
-            updateRect.attr("fill", "steelblue")
-                .attr("x", function(d, i){
-                    return padding.left + i * rectStep;
-                })
-                .attr("y", function(d){
-                    return height - padding.bottom - d;
-                })
-                .attr("width", rectWidth)
-                .attr("height", function(d){
-                    return d;
-                });
-            // 2. enter
-            enterRect.append("rect")
-                .attr("x", function(d, i){
-                    return padding.left + i * rectStep;
-                })
-                .attr("y", function(d){
-                    return height - padding.bottom - d;
-                })
-                .attr("width", rectWidth)
-                .attr("height", function(d){
-                    return d;
-                });
-            // 3. exit
-            exitRect.remove();
+        // p108
+        linear = d3.scaleLinear()
+            .domain([-20, 20])
+            .range([0, 100]);
+        // [-20, -10, 0, 10, 20]
+        var ticks = linear.ticks(5);
+        console.log(ticks);
+        var tickFormat = linear.tickFormat(5, "+");
+        for(var i = 0; i < ticks.legth; i++){
+            ticks[i] = tickFormat(ticks[i]);
+        }
+        // ["-20", "-10", "+0", "+10", "+20"]
 
-            var updateText = svg.selectAll("text")
-                .data(dataset);
-            var enterText = updateText.enter();
-            var exitText = updateText.exit();
-
-            // 1. update
-            updateText.attr("fill", "white")
-                .attr("font-size", "14px")
-                .attr("text-anchor", "middle")
-                .attr("x", function(d, i){
-                    return padding.left + i * rectStep;
-                })
-                .attr("y", function(d){
-                    return height - padding.bottom - d;
-                })
-                .attr("dx", rectWidth / 2)
-                .attr("dy", "1em")
-                .text(function(d){
-                    return d;
-                });
-            // 2. enter
-            enterText.append("text")
-                .attr("fill", "white")
-                .attr("font-size", "14px")
-                .attr("text-anchor", "middle")
-                .attr("x", function(d, i){
-                    return padding.left + i * rectStep;
-                })
-                .attr("y", function(d){
-                    return height - padding.bottom - d;
-                })
-                .attr("dx", rectWidth / 2)
-                .attr("dy", "1em")
-                .text(function(d){
-                    return d;
-                });
-            // 3. exit
-            exitText.remove();
-
-        }
-        function myadd(){
-            dataset.push(Math.floor(Math.random() * 300));
-            draw();
-        }
-        function mydel(){
-            dataset.shift();
-            draw();
-        }
-        function mysort(){
-            dataset.sort(d3.ascending);
-            draw();
-        }
-        function myshuffle(){
-            d3.shuffle(dataset);
-            draw();
-        }
+        console.log(ticks);
     </script>
 {% endblock %}

@@ -37,43 +37,26 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
+        // default domain and range is [0, 1]
+        var pow = d3.scalePow().exponent(3);
+        // 8 27
+        console.log(pow(2));
+        console.log(pow(3));
+        pow.exponent(0.5);
+        // 1.414 1.732
+        console.log(pow(2));
+        console.log(pow(3));
+
+        // pow and linear
+        pow = d3.scalePow().exponent(3)
+            .domain([0, 3])
+            .range([0, 90]);
         var linear = d3.scaleLinear()
-            .domain([0, 500])
-            .range([0, 100]);
-        // 10 44 90
-        console.log(linear(50));
-        console.log(linear(220));
-        console.log(linear(450));
-        linear = d3.scaleLinear()
-            .domain([0, 20])
-            .range([0, 100]);
-        // 50 150
-        console.log(linear(10));
-        console.log(linear(30));
-        // if y = 80 then x = 16
-        console.log(linear.invert(80));
-        linear.clamp(true);
-        console.log(linear(30));
-        // 67
-        linear.rangeRound([0, 100]);
-        console.log(linear(13.33));
-        // [0.1, 0.5]
-        linear.domain([0.12300000, 0.488888888]).nice();
-        console.log(linear.domain());
+            .domain([0, Math.pow(3, 3)])
+            .range([0, 90]);
+        // output should be 11.25
+        console.log(pow(1.5))
+        console.log(linear(Math.pow(1.5, 3)));
 
-        // p108
-        linear = d3.scaleLinear()
-            .domain([-20, 20])
-            .range([0, 100]);
-        // [-20, -10, 0, 10, 20]
-        var ticks = linear.ticks(5);
-        console.log(ticks);
-        var tickFormat = linear.tickFormat(5, "+");
-        for(var i = 0; i < ticks.legth; i++){
-            ticks[i] = tickFormat(ticks[i]);
-        }
-        // ["-20", "-10", "+0", "+10", "+20"]
-
-        console.log(ticks);
     </script>
 {% endblock %}

@@ -37,22 +37,27 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var threshold = d3.scaleThreshold()
-            .domain([10, 20, 30])
-            .range(["red", "green", "blue", "black"]);
-        // output should be r g b b
-        console.log(threshold(5));
-        console.log(threshold(15));
-        console.log(threshold(25));
-        console.log(threshold(35));
-        // output should be [undefined, 10]
-        console.log(threshold.invertExtent("red"));
-        // output should be [10, 20]
-        console.log(threshold.invertExtent("green"));
-        // output should be [20, 30]
-        console.log(threshold.invertExtent("blue"));
-        // output should be [30, undefined]
-        console.log(threshold.invertExtent("black"));
+        var ordinal = d3.scaleOrdinal()
+            .domain(d3.range(1, 6))
+            .range(d3.range(10, 51, 10));
+        // output 10 30 50
+        console.log(ordinal(1));
+        console.log(ordinal(3));
+        console.log(ordinal(5));
+        // out of range 10
+        console.log(ordinal(8));
+
+        var ordinal = d3.scaleOrdinal()
+            .domain(d3.range(1, 6))
+            .rangeBands([0, 100]);
+            // .rangePoints([0, 100]);
+            // .rangeRoundPoints([0, 100], 5);
+        // 0 25 50 75 100
+        console.log(ordinal.range());
+        // 0 50 100
+        console.log(ordinal(1));
+        console.log(ordinal(3));
+        console.log(ordinal(5));
 
     </script>
 {% endblock %}

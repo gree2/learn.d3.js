@@ -37,26 +37,41 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        // default domain and range is [0, 1]
-        var pow = d3.scalePow().exponent(3);
-        // 8 27
-        console.log(pow(2));
-        console.log(pow(3));
-        pow.exponent(0.5);
-        // 1.414 1.732
-        console.log(pow(2));
-        console.log(pow(3));
+        var quantize = d3.scaleQuantize()
+            .domain([0, 10])
+            .range(["red", "green", "blue", "yellow", "black"]);
 
-        // pow and linear
-        pow = d3.scalePow().exponent(3)
-            .domain([0, 3])
-            .range([0, 90]);
-        var linear = d3.scaleLinear()
-            .domain([0, Math.pow(3, 3)])
-            .range([0, 90]);
-        // output should be 11.25
-        console.log(pow(1.5))
-        console.log(linear(Math.pow(1.5, 3)));
+        console.log(quantize(1));
+        console.log(quantize(3));
+        console.log(quantize(5.999));
+        console.log(quantize(6));
+
+        var quantize = d3.scaleQuantize()
+            .domain([50, 0])
+            .range(["red", "green", "blue", "yellow", "black"]);
+            // .range(["#888", "#666", "#444", "#222", "#000"]);
+
+        var r = d3.range(45, 0, -1);
+        console.log(r);
+        console.log(quantize(45));
+        console.log(quantize(35));
+        console.log(quantize(25));
+        console.log(quantize(15));
+        console.log(quantize(5));
+
+        var svg = d3.select(".button")
+            .append("svg")
+            .attr("width", 800)
+            .attr("height", 800);
+
+        svg.selectAll("circle")
+            .data(r)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d, i){ return 50 + i * 10; })
+            .attr("cy", function(d, i){ return 50 + i * 5; })
+            .attr("r", function(d){ return d; })
+            .attr("fill", function(d){ return quantize(d); })
 
     </script>
 {% endblock %}

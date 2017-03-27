@@ -37,15 +37,24 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        console.log(d3.schemeCategory10);
-        console.log(d3.schemeCategory20);
-        console.log(d3.schemeCategory20b);
-        console.log(d3.schemeCategory20c);
+        var width = 800;
+        var height = 600;
 
         var color = d3.schemeCategory10;
-        console.log(color);
-        console.log(color[1]);
-        console.log(color["gree2"]);
+        var dataset = d3.range(color.length);
+        console.log(dataset);
 
+        var svg = d3.select(".page-header").append("svg")
+            .attr("height", height)
+            .attr("width", width);
+        console.log(color);
+        var circle = svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle")
+            .attr("cx", function(d, i){ return 30 + i * 80;})
+            .attr("cy", 100)
+            .attr("r", 30)
+            .attr("fill", function(d, i){ return color[i];});
     </script>
 {% endblock %}

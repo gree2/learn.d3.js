@@ -47,6 +47,17 @@
         var svg = d3.select(".page-header").append("svg")
             .attr("height", height)
             .attr("width", width);
+
+        var xScale = d3.scaleLinear()
+            .domain([0, 10])
+            .range([0, width]);
+
+        var axisBottom = d3.axisBottom()
+            .scale(xScale);
+        var bAxis = svg.append("g")
+            .attr("transform", "translate(0, 70)")
+        axisBottom(bAxis);
+
         console.log(color);
         var circle = svg.selectAll("circle")
             .data(dataset)
@@ -56,5 +67,11 @@
             .attr("cy", 100)
             .attr("r", 30)
             .attr("fill", function(d, i){ return color[i];});
+
+        var axisTop = d3.axisTop()
+            .scale(xScale);
+        var tAxis = svg.append("g")
+            .attr("transform", "translate(0, 130)")
+        axisTop(tAxis);
     </script>
 {% endblock %}

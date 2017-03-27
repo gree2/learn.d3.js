@@ -72,6 +72,15 @@
             .scale(xScale);
         var tAxis = svg.append("g")
             .attr("transform", "translate(0, 130)")
-        axisTop(tAxis);
+        tAxis.call(axisTop);
+
+        var axisRight = d3.axisRight()
+            .scale(xScale)
+            .ticks(10)
+            .tickSize(-8, 16)
+            .tickValues([0 , 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        var tAxis = svg.append("g")
+            .attr("transform", "translate(100, 0)")
+        tAxis.call(axisRight);
     </script>
 {% endblock %}

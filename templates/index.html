@@ -37,27 +37,15 @@
     <script type="text/javascript" charset="utf-8"
         src="{{ url_for('static', filename='d3.min.js') }}"></script>
     <script type="text/javascript">
-        var ordinal = d3.scaleOrdinal()
-            .domain(d3.range(1, 6))
-            .range(d3.range(10, 51, 10));
-        // output 10 30 50
-        console.log(ordinal(1));
-        console.log(ordinal(3));
-        console.log(ordinal(5));
-        // out of range 10
-        console.log(ordinal(8));
+        console.log(d3.schemeCategory10);
+        console.log(d3.schemeCategory20);
+        console.log(d3.schemeCategory20b);
+        console.log(d3.schemeCategory20c);
 
-        var ordinal = d3.scaleOrdinal()
-            .domain(d3.range(1, 6))
-            .rangeBands([0, 100]);
-            // .rangePoints([0, 100]);
-            // .rangeRoundPoints([0, 100], 5);
-        // 0 25 50 75 100
-        console.log(ordinal.range());
-        // 0 50 100
-        console.log(ordinal(1));
-        console.log(ordinal(3));
-        console.log(ordinal(5));
+        var color = d3.schemeCategory10;
+        console.log(color);
+        console.log(color[1]);
+        console.log(color["gree2"]);
 
     </script>
 {% endblock %}
